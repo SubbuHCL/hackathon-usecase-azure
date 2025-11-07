@@ -7,10 +7,27 @@ Regardless of the track you choose, you will be working with the following commo
 ## Microservices: 
 You will be provided with two Node.js microservices - a Patient Service and an Appointment Service. The code for these services can be found in the Sample Microservices Code file.
 
-## Containerization: 
+Order-service Java microservice.
+
+## What we are looking for
+CI Pipeline
+1. Build microservices on local
+2. Docker build microservice
+3. Create Kubernetes YAML files.
+3. Push to GCR / ACR
+CD Deployment
+1. Pull from GCR / ACR
+2. Deploy on GKE / AKS
+
+For Containternization use Docker, Terraform for IaC, Github Action / Azure DevOps for CI/CD pipelines.
+
+### Monitoring and Logging: 
+Set up basic monitoring and logging using Azure Monitor / GCP.
+
+### Containerization: 
 You need to containerize these microservices using Docker.
 
-## Infrastructure as Code (Terraform):
+### Infrastructure as Code (Terraform):
 
 Set up a Terraform project structure supporting multiple environments (dev, staging, prod).
 Provision the following Azure / GCP resources:
@@ -24,12 +41,11 @@ Terraform State Management:
 Implement remote state storage using Blob Storage / GCP Files
 Set up state locking
 Configure workspace separation for different environments
-## GitHub Actions / Azure DevOps for IaC:
+### GitHub Actions / Azure DevOps for IaC:
 Create workflows for:
 Terraform fmt and validate on all PRs
 Terraform plan on pull requests
 Terraform apply on merges to main branch
 CI/CD: Implement a CI/CD pipeline using GitHub Actions for your application code.
 
-## Monitoring and Logging: 
-Set up basic monitoring and logging using Azure Monitor / GCP.
+
