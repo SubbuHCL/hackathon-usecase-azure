@@ -10,12 +10,12 @@ You will be provided with two Node.js microservices - a Patient Service and an A
 Order-service Java microservice.
 
 ## What we are looking for
-CI Pipeline
+### CI Pipeline
 1. Build microservices on local
 2. Docker build microservice
 3. Create Kubernetes YAML files.
 3. Push to GCR / ACR
-CD Deployment
+### CD Deployment
 1. Pull from GCR / ACR
 2. Deploy on GKE / AKS
 
@@ -41,11 +41,10 @@ Terraform State Management:
 Implement remote state storage using Blob Storage / GCP Files
 Set up state locking
 Configure workspace separation for different environments
+
 ### GitHub Actions / Azure DevOps for IaC:
 Create workflows for:
-Terraform fmt and validate on all PRs
-Terraform plan on pull requests
-Terraform apply on merges to main branch
-CI/CD: Implement a CI/CD pipeline using GitHub Actions for your application code.
-
-
+1. CI/CD: Implement a CI/CD pipeline using GitHub Actions for your application code.
+2. Terraform fmt and validate on all PRs
+3. Terraform plan on pull requests
+4. Terraform apply on merges to main branch
