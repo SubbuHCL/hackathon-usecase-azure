@@ -5,7 +5,8 @@ Welcome to the DevOps Hackathon Challenge! In this hackathon, you will demonstra
 Regardless of the track you choose, you will be working with the following common elements:
 
 ## Microservices: 
-You will be provided with two Node.js microservices - a Patient Service and an Appointment Service. The code for these services can be found in the Sample Microservices Code file.
+You will be provided with two Node.js microservices - a Patient Service and an Appointment Service or Java based Microservice (order-service).
+The code for these services can be found in the Sample Microservices Code file.
 
 Order-service Java microservice.
 
@@ -25,7 +26,7 @@ Order-service Java microservice.
 For Containternization use Docker, Terraform for IaC, Github Action / Azure DevOps for CI/CD pipelines.
 
 ### Monitoring and Logging: 
-Set up basic monitoring and logging using Azure Monitor / GCP.
+Set up basic monitoring and logging using Azure Monitor and other services / GCP.
 
 ### Containerization: 
 You need to containerize these microservices using Docker.
