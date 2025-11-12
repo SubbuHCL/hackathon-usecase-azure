@@ -13,11 +13,14 @@ Order-service Java microservice.
 ### CI Pipeline
 1. Build microservices on local
 2. Docker build microservice
-3. Create Kubernetes YAML files.
+3. Create Kubernetes YAML files. (Internal - helm charts)
 3. Push to GCR / ACR
 ### CD Deployment
 1. Pull from GCR / ACR
 2. Deploy on GKE / AKS
+
+### Secrets
+1. Azure KeyVault
 
 For Containternization use Docker, Terraform for IaC, Github Action / Azure DevOps for CI/CD pipelines.
 
