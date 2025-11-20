@@ -1,0 +1,7 @@
+# Example terraform.tfvars file for prod environment
+# Copy this file to terraform.tfvars and update with your values
+
+project_id     = "your-gcp-project-id"
+project_prefix = "healthcare"
+environment    = "prod"
+region         = "us-central1"

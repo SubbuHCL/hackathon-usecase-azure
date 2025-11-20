@@ -1,0 +1,7 @@
+# Example terraform.tfvars file for staging environment
+# Copy this file to terraform.tfvars and update with your values
+
+project_id     = "your-gcp-project-id"
+project_prefix = "healthcare"
+environment    = "staging"
+region         = "us-central1"

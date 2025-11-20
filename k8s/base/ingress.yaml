@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: healthcare-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  tls:
+  - hosts:
+    - healthcare.example.com
+    secretName: healthcare-tls
+  rules:
+  - host: healthcare.example.com
+    http:
+      paths:
+      - path: /patients(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: patient-service
+            port:
+              number: 80
+      - path: /appointments(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: application-service
+            port:
+              number: 80
+      - path: /orders(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 80

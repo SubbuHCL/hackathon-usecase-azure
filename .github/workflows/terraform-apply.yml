@@ -1,0 +1,72 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+
+env:
+  TF_VERSION: '1.6.0'
+
+jobs:
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev]
+      max-parallel: 1
+    
+    environment: ${{ matrix.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform/environments/${{ matrix.environment }}
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: terraform/environments/${{ matrix.environment }}
+        env:
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+        working-directory: terraform/environments/${{ matrix.environment }}
+        env:
+          TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Save Terraform Outputs
+        id: terraform-outputs
+        run: |
+          echo "cluster_name=$(terraform output -raw gke_cluster_name)" >> $GITHUB_OUTPUT
+          echo "cluster_location=$(terraform output -raw gke_cluster_location)" >> $GITHUB_OUTPUT
+          echo "docker_repository=$(terraform output -raw docker_repository)" >> $GITHUB_OUTPUT
+        working-directory: terraform/environments/${{ matrix.environment }}
+
+      - name: Summary
+        run: |
+          echo "### Terraform Apply Successful ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ matrix.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**GKE Cluster:** ${{ steps.terraform-outputs.outputs.cluster_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Location:** ${{ steps.terraform-outputs.outputs.cluster_location }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Docker Repository:** ${{ steps.terraform-outputs.outputs.docker_repository }}" >> $GITHUB_STEP_SUMMARY
