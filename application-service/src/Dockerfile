@@ -4,7 +4,7 @@
 # RUN npm install
 
 FROM node:lts-slim
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY . .
 RUN npm install
 EXPOSE 3001
