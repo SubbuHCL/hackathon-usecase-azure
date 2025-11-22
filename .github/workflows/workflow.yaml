@@ -1,6 +1,10 @@
 name: CI Workflow
 on:
-  workflow_dispatch: {}
+  push:
+    branches:
+      - hackathon
+      - main
+
 
 env:
   APP_SERVICE_IMAGE_NAME: us-central1-docker.pkg.dev/hcl-hackathon-479010/hcl-hackathon-repo/app-service:v2
