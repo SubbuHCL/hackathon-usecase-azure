@@ -29,13 +29,13 @@ jobs:
         run: gcloud auth configure-docker ${{ env.DEFAULT_REGION }}-docker.pkg.dev
 
       - name: Build APP_SERVICE Docker Image
-        run: docker build -t ${{ env.APP_SERVICE_IMAGE_NAME }} -f ./application-service/src/Dockerfile
+        run: docker build -t ${{ env.APP_SERVICE_IMAGE_NAME }} -f ./application-service/src/Dockerfile .
 
       - name: Build ORDER_SERVICE Docker Image
-        run: docker build -t ${{ env.ORDER_SERVICE_IMAGE_NAME }} -f ./order-service/Dockerfile
+        run: docker build -t ${{ env.ORDER_SERVICE_IMAGE_NAME }} -f ./order-service/Dockerfile .
 
       - name: Build PATIENT_SERVICE Docker Image
-        run: docker build -t ${{ env.PATIENT_SERVICE_IMAGE_NAME }} -f ./patient-service/src/Dockerfile 
+        run: docker build -t ${{ env.PATIENT_SERVICE_IMAGE_NAME }} -f ./patient-service/src/Dockerfile .
 
       - name: Push APP_SERVICE_IMAGE to Artifact Registry
         run: docker push ${{ env.APP_SERVICE_IMAGE_NAME }}
