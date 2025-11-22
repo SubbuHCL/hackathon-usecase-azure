@@ -10,34 +10,34 @@ env:
 
 jobs:
   build_push:
-  name: 'Build and Push Container Image'
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Google Auth (JSON Key)
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Google Auth (JSON Key)
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Setup Docker Access to Artifact Registry
-      run: gcloud auth configure-docker ${{ DEFAULT_REGION }}-docker.pkg.dev
+      - name: Setup Docker Access to Artifact Registry
+        run: gcloud auth configure-docker ${{ DEFAULT_REGION }}-docker.pkg.dev
 
-    - name: Build APP_SERVICE Docker Image
-      run: docker build -t ${{ APP_SERVICE_IMAGE_NAME }} -f ./application-service/src/Dockerfile
+      - name: Build APP_SERVICE Docker Image
+        run: docker build -t ${{ APP_SERVICE_IMAGE_NAME }} -f ./application-service/src/Dockerfile
 
-    - name: Build ORDER_SERVICE Docker Image
-      run: docker build -t ${{ ORDER_SERVICE_IMAGE_NAME }} -f ./order-service/Dockerfile
+      - name: Build ORDER_SERVICE Docker Image
+        run: docker build -t ${{ ORDER_SERVICE_IMAGE_NAME }} -f ./order-service/Dockerfile
 
-    - name: Build PATIENT_SERVICE Docker Image
-      run: docker build -t ${{ PATIENT_SERVICE_IMAGE_NAME }} -f ./patient-service/src/Dockerfile 
+      - name: Build PATIENT_SERVICE Docker Image
+        run: docker build -t ${{ PATIENT_SERVICE_IMAGE_NAME }} -f ./patient-service/src/Dockerfile 
 
-    - name: Push APP_SERVICE_IMAGE to Artifact Registry
-      run: docker push ${{ APP_SERVICE_IMAGE_NAME }}
-      
-    - name: Push PATIENT_SERVICE_IMAGE to Artifact Registry
-      run: docker push ${{ PATIENT_SERVICE_IMAGE_NAME }}
+      - name: Push APP_SERVICE_IMAGE to Artifact Registry
+        run: docker push ${{ APP_SERVICE_IMAGE_NAME }}
+        
+      - name: Push PATIENT_SERVICE_IMAGE to Artifact Registry
+        run: docker push ${{ PATIENT_SERVICE_IMAGE_NAME }}
 
-    - name: Push ORDER_SERVICE_IMAGE to Artifact Registry
-      run: docker push ${{ ORDER_SERVICE_IMAGE_NAME }}
+      - name: Push ORDER_SERVICE_IMAGE to Artifact Registry
+        run: docker push ${{ ORDER_SERVICE_IMAGE_NAME }}
