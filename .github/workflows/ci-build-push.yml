@@ -1,0 +1,35 @@
+name: Build and Push Images
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: narasimha.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build and Push Patient
+      run: |
+        docker build -t narasimha.azurecr.io/patient-service:latest ./patient-service
+        docker push narasimha.azurecr.io/patient-service:latest
+
+    - name: Build and Push Order
+      run: |
+        docker build -t narasimha.azurecr.io/order-service:latest ./order-service
+        docker push narasimha.azurecr.io/order-service:latest
+
+    - name: Build and Push Application
+      run: |
+        docker build -t narasimha.azurecr.io/application-service:latest ./application-service
+        docker push narasimha.azurecr.io/application-service:latest
+
+

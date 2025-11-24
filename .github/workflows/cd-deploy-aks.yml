@@ -1,0 +1,35 @@
+name: Deploy to AKS
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set AKS Context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: narasimha-ACR
+        cluster-name: narasimhaaks
+
+    - name: Helm Deploy Patient
+      run: |
+        helm upgrade --install patient ./helm/patient --set image.tag=latest
+
+    - name: Helm Deploy Order
+      run: |
+        helm upgrade --install order ./helm/order --set image.tag=latest
+
+    - name: Helm Deploy Application
+      run: |
+        helm upgrade --install application ./helm/application --set image.tag=latest

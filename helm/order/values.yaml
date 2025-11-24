@@ -1,0 +1,12 @@
+replicaCount: 2
+
+image:
+  repository: narasimha.azurecr.io/order-service
+  tag: latest
+
+service:
+  type: LoadBalancer
+  port: 30002      # External port
+  targetPort: 3000 # Container port
+
+

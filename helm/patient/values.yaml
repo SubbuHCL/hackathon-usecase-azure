@@ -1,0 +1,11 @@
+replicaCount: 2
+
+image:
+  repository: narasimha.azurecr.io/patient-service
+  tag: latest
+
+service:
+  type: LoadBalancer
+  port: 30001      # External port
+  targetPort: 3000 # Container port
+
